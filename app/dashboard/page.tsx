@@ -1,0 +1,2 @@
+import Link from 'next/link';
+export default function Dashboard(){return <main style={{maxWidth:1050,margin:'0 auto',padding:'55px 24px'}}><Link href="/">← NovaPhoto AI</Link><h1 style={{fontSize:44}}>Mon Dashboard</h1><p style={{color:'#9299ad'}}>Gérez vos créations, crédits et téléchargements.</p><div className="grid" style={{marginTop:35}}><article><h3>20 crédits</h3><p>Solde disponible</p></article><article><h3>0 créations</h3><p>Historique de traitements</p></article><article><h3>Plan Gratuit</h3><p>Passez à Pro à tout moment</p></article></div></main>}
