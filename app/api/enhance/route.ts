@@ -1,0 +1,2 @@
+import {NextRequest,NextResponse} from 'next/server';
+export async function POST(req:NextRequest){const form=await req.formData();const file=form.get('image');const tool=String(form.get('tool')||'Amélioration Pro');if(!(file instanceof File))return NextResponse.json({error:'Image requise'},{status:400});if(!process.env.AI_PROVIDER_API_KEY)return NextResponse.json({mode:'preview',message:'Studio prêt. Ajoutez AI_PROVIDER_API_KEY pour activer le traitement IA serveur.',tool});return NextResponse.json({status:'queued',tool,message:'Traitement IA configuré côté serveur.'});}
