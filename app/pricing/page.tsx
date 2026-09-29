@@ -1,0 +1,3 @@
+import Link from 'next/link';
+const plans=[['Gratuit','0 €','20 crédits pour tester'],['Pro','14,99 € / mois','500 crédits · HD/4K · sans filigrane'],['Business','39,99 € / mois','2000 crédits · lots · usage commercial']];
+export default function Pricing(){return <main style={{maxWidth:1050,margin:'0 auto',padding:'55px 24px',textAlign:'center'}}><Link href="/">← NovaPhoto AI</Link><h1 style={{fontSize:48}}>Choisissez votre formule</h1><p style={{color:'#9299ad'}}>Des crédits simples pour chaque traitement photo.</p><div className="grid" style={{gridTemplateColumns:'repeat(3,1fr)',marginTop:40}}>{plans.map(p=><article key={p[0]}><h2>{p[0]}</h2><h3 style={{fontSize:28}}>{p[1]}</h3><p>{p[2]}</p><button className="primary">Choisir</button></article>)}</div></main>}
