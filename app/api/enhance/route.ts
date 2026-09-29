@@ -17,7 +17,7 @@ export async function POST(req:NextRequest){
   if(file.size>10*1024*1024)return json({error:'Photo trop volumineuse. Utilisez une image de moins de 10 Mo.'},413);
   const key=process.env.OPENAI_API_KEY?.trim();
   if(!key)return json({error:'La clé OpenAI n’est pas configurée sur le serveur.'},503);
-  const body=new FormData();body.append('model','gpt-image-1');body.append('image',file,file.name||'photo.png');body.append('prompt',instructions[tool]||instructions['Amélioration Pro']);body.append('size','1024x1024');body.append('quality','medium');
+  const body=new FormData();body.append('model','gpt-image-2');body.append('image',file,file.name||'photo.png');body.append('prompt',instructions[tool]||instructions['Amélioration Pro']);body.append('size','1024x1024');body.append('quality','medium');
   const response=await fetch('https://api.openai.com/v1/images/edits',{method:'POST',headers:{Authorization:'Bearer '+key},body,cache:'no-store'});
   const raw=await response.text();let data:any={};try{data=raw?JSON.parse(raw):{}}catch{}
   if(!response.ok){
