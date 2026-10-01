@@ -38,6 +38,7 @@ export default function Home(){
 
  return <main><nav><a href="/" aria-label="NovaPhoto AI accueil" style={{display:'inline-flex',alignItems:'center'}}><img src="/novaphoto-logo.svg" alt="NovaPhoto AI" style={{height:46,width:'auto',display:'block'}}/></a><div><a href="#examples">Avant / Après</a><a href="#studio">Studio</a><a href="#features">Outils</a><a href="/pricing">Tarifs</a><a href="/dashboard"><button>Mon espace</button></a></div></nav>
  <section className="hero"><div className="badge">✦ IA + RETOUCHE MANUELLE</div><h1>Transformez vos photos<br/><em>en qualité professionnelle.</em></h1><p>Créez votre compte et profitez de 20 crédits gratuits. Une fois les 20 crédits utilisés, un abonnement est requis pour continuer les retouches IA.</p><button className="primary" onClick={()=>input.current?.click()}><WandSparkles/> Ajouter des photos</button><small>JPG · PNG · WEBP — jusqu’à 10 photos par lot</small></section>
+ <section className="slow-banner-section"><button className="slow-banner-card" onClick={()=>{document.getElementById('studio')?.scrollIntoView({behavior:'smooth'});setTimeout(()=>input.current?.click(),500)}} aria-label="Essayer NovaPhoto AI"><img src="/slow-motion-banner.svg" alt="NovaPhoto AI — bannière Slow Motion"/></button></section>
  <section id="examples" className="before-after-section">
   <div className="section-kicker">RÉSULTATS VISUELS</div>
   <h2>Voyez la différence <em>avant / après</em></h2>
