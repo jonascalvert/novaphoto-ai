@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 620" role="img" aria-labelledby="t d">
+<title id="t">NovaPhoto AI — Slow Motion</title>
+<desc id="d">Bannière promotionnelle NovaPhoto AI avec outils photo et ambiance slow motion.</desc>
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#05091a"/><stop offset=".45" stop-color="#11113a"/><stop offset="1" stop-color="#031536"/></linearGradient>
+ <linearGradient id="neon" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#42ddff"/><stop offset=".35" stop-color="#514cff"/><stop offset=".68" stop-color="#d934ff"/><stop offset="1" stop-color="#ff8a3d"/></linearGradient>
+ <radialGradient id="glow"><stop stop-color="#8b5cff" stop-opacity=".9"/><stop offset="1" stop-color="#8b5cff" stop-opacity="0"/></radialGradient>
+ <filter id="blur"><feGaussianBlur stdDeviation="18"/></filter>
+ <filter id="soft"><feGaussianBlur stdDeviation="5"/></filter>
+</defs>
+<rect width="1800" height="620" rx="42" fill="url(#bg)"/>
+<ellipse cx="1040" cy="295" rx="530" ry="300" fill="url(#glow)" opacity=".22"/>
+<path d="M690 80C880 180 760 360 1100 525" stroke="#3edcff" stroke-width="16" opacity=".18" filter="url(#blur)" fill="none"/>
+<path d="M760 40C980 160 880 390 1260 580" stroke="#d934ff" stroke-width="18" opacity=".18" filter="url(#blur)" fill="none"/>
+<g transform="translate(55 52)">
+ <rect x="0" y="0" width="82" height="82" rx="22" fill="#12143a" stroke="url(#neon)" stroke-width="4"/>
+ <path d="M18 62V22c0-9 10-13 17-7l26 27V25c0-7 6-12 12-12h7v48c0 9-10 13-17 7L38 42v20c0 7-6 12-12 12h-8z" fill="none" stroke="url(#neon)" stroke-width="9" stroke-linecap="round"/>
+ <circle cx="62" cy="31" r="16" fill="#070b20" stroke="#65dbff" stroke-width="4"/>
+ <circle cx="62" cy="31" r="6" fill="#d934ff"/>
+ <text x="105" y="43" font-family="Arial" font-size="44" font-weight="800" fill="white">NovaPhoto</text>
+ <text x="342" y="43" font-family="Arial" font-size="44" font-weight="800" fill="url(#neon)">AI</text>
+ <text x="106" y="78" font-family="Arial" font-size="20" letter-spacing="5" fill="#c8c8db">TRANSFORMEZ VOS PHOTOS EN UN CLIC</text>
+</g>
+<g transform="translate(58 178)" font-family="Arial">
+ <g transform="translate(0 0)"><rect width="160" height="116" rx="18" fill="#11152d" stroke="#333761"/><text x="20" y="37" font-size="25" fill="#9c6dff" font-weight="800">✦</text><text x="20" y="73" font-size="18" fill="white" font-weight="700">Amélioration</text><text x="20" y="96" font-size="18" fill="white" font-weight="700">Pro</text></g><g transform="translate(180 0)"><rect width="160" height="116" rx="18" fill="#11152d" stroke="#333761"/><text x="20" y="37" font-size="25" fill="#9c6dff" font-weight="800">◎</text><text x="20" y="73" font-size="18" fill="white" font-weight="700">Préserver</text><text x="20" y="96" font-size="18" fill="white" font-weight="700">le visage</text></g><g transform="translate(360 0)"><rect width="160" height="116" rx="18" fill="#11152d" stroke="#333761"/><text x="20" y="37" font-size="25" fill="#9c6dff" font-weight="800">4K</text><text x="20" y="73" font-size="18" fill="white" font-weight="700">Upscale</text><text x="20" y="96" font-size="18" fill="white" font-weight="700">4K</text></g><g transform="translate(0 135)"><rect width="160" height="116" rx="18" fill="#11152d" stroke="#333761"/><text x="20" y="37" font-size="25" fill="#9c6dff" font-weight="800">◇</text><text x="20" y="73" font-size="18" fill="white" font-weight="700">Arrière-plan</text></g><g transform="translate(180 135)"><rect width="160" height="116" rx="18" fill="#11152d" stroke="#333761"/><text x="20" y="37" font-size="25" fill="#9c6dff" font-weight="800">T</text><text x="20" y="73" font-size="18" fill="white" font-weight="700">T-shirt Ready</text></g><g transform="translate(360 135)"><rect width="160" height="116" rx="18" fill="#11152d" stroke="#333761"/><text x="20" y="37" font-size="25" fill="#9c6dff" font-weight="800">≡</text><text x="20" y="73" font-size="18" fill="white" font-weight="700">Retouche</text><text x="20" y="96" font-size="18" fill="white" font-weight="700">manuelle</text></g>
+ <rect x="0" y="282" width="520" height="82" rx="40" fill="url(#neon)"/>
+ <text x="42" y="333" font-size="28" fill="white" font-weight="800">Essayer maintenant</text>
+ <circle cx="470" cy="323" r="29" fill="white"/><text x="458" y="334" font-size="30" fill="#5b4dff">→</text>
+</g>
+<!-- stylized slow motion portrait silhouette -->
+<g transform="translate(650 70)">
+ <g opacity=".25" filter="url(#soft)">
+  <ellipse cx="390" cy="165" rx="90" ry="115" fill="#2d5ccf"/>
+  <path d="M310 265c80-80 210-60 250 115l-30 120H250l10-110c10-58 20-86 50-125z" fill="#234da6"/>
+ </g>
+ <g opacity=".42" transform="translate(55 0)"><ellipse cx="390" cy="165" rx="90" ry="115" fill="#5f43d8"/><path d="M310 265c80-80 210-60 250 115l-30 120H250l10-110c10-58 20-86 50-125z" fill="#3e2ea5"/></g>
+ <ellipse cx="365" cy="155" rx="95" ry="120" fill="#3b2446" stroke="#ff9b72" stroke-width="5"/>
+ <path d="M282 262c90-78 230-54 270 124l-22 120H206l18-108c12-62 25-94 58-136z" fill="#141523" stroke="#754cff" stroke-width="4"/>
+ <path d="M328 42c70-48 132-12 144 31-27-18-58-14-75-3-22-10-43-12-69-4z" fill="#0a0b12"/>
+ <path d="M540 210c80 40 130 100 168 175" stroke="#ff9d76" stroke-width="32" stroke-linecap="round"/>
+ <circle cx="708" cy="388" r="31" fill="#ffb08e"/>
+ <g opacity=".72"><circle cx="505" cy="120" r="7" fill="#fff"/><circle cx="555" cy="160" r="5" fill="#4cdfff"/><circle cx="590" cy="210" r="4" fill="#d934ff"/><circle cx="610" cy="260" r="6" fill="#fff"/></g>
+</g>
+<g transform="translate(1340 55)">
+ <g transform="rotate(-6 150 75)"><rect width="300" height="145" rx="20" fill="#15182e" stroke="#fff" stroke-width="4"/><rect x="16" y="16" width="268" height="113" rx="12" fill="url(#neon)" opacity=".48"/><circle cx="250" cy="72" r="26" fill="white" opacity=".92"/><path d="M242 58l20 14-20 14z" fill="#3f3d70"/></g>
+ <g transform="translate(-80 180) rotate(5 170 80)"><rect width="330" height="165" rx="20" fill="#15182e" stroke="#fff" stroke-width="4"/><rect x="16" y="16" width="298" height="133" rx="12" fill="#091e3e"/><path d="M165 17v132" stroke="#fff" stroke-width="3"/><text x="38" y="90" fill="#91a4bb" font-family="Arial" font-size="22">AVANT</text><text x="200" y="90" fill="white" font-family="Arial" font-size="22">APRÈS</text></g>
+</g>
+<text x="1280" y="510" font-family="cursive" font-size="78" font-style="italic" fill="#fff" stroke="#4d5cff" stroke-width="2">Slow Motion</text>
+<text x="1290" y="552" font-family="Arial" font-size="18" letter-spacing="6" fill="#eee">DONNEZ UNE NOUVELLE VIE À VOS PHOTOS</text>
+</svg>
