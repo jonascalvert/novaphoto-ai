@@ -34,3 +34,16 @@ export async function listMyPrivatePhotos():Promise<PrivatePhoto[]>{
  if(error)throw error;
  return await Promise.all((data||[]).map(async(p:any)=>{const {data:s}=await supabase!.storage.from('private-photos').createSignedUrl(p.storage_path,300);return {...p,signed_url:s?.signedUrl}}));
 }
+
+
+export async function deleteMyPrivatePhoto(photo:{id:string;storage_path:string}){
+ if(!supabase)throw new Error('Supabase indisponible');
+ const {data:{user}}=await supabase.auth.getUser(); if(!user)throw new Error('Connexion requise');
+ if(!photo?.id||!photo?.storage_path)throw new Error('Photo invalide');
+ if(!photo.storage_path.startsWith(user.id+'/'))throw new Error('Accès refusé');
+ const {error:storageError}=await supabase.storage.from('private-photos').remove([photo.storage_path]);
+ if(storageError)throw storageError;
+ const {error:dbError}=await supabase.from('photo_assets').delete().eq('id',photo.id).eq('user_id',user.id);
+ if(dbError)throw dbError;
+ return true;
+}
