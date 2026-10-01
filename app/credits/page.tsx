@@ -1,17 +1,37 @@
 'use client';
 import Link from 'next/link';import {useEffect,useMemo,useState} from 'react';import {supabase} from '../../lib/supabase';
 
+const packs=[
+ {credits:100,price:4.99,label:'Recharge rapide'},
+ {credits:500,price:14.99,label:'Pack populaire'},
+ {credits:1500,price:34.99,label:'Pack avantage'}
+];
+
 export default function Credits(){
- const [qty,setQty]=useState(100),[amount,setAmount]=useState<number|null>(null),[msg,setMsg]=useState(''),[loading,setLoading]=useState(false),[plan,setPlan]=useState('free');
- useEffect(()=>{(async()=>{const {data:{user}}=await supabase.auth.getUser();if(!user){location.href='/login';return}const {data:p}=await supabase.from('profiles').select('plan,subscription_status').eq('id',user.id).maybeSingle();setPlan(p?.plan||'free')})()},[]);
- const display=useMemo(()=>amount===null?'—':amount.toLocaleString('fr-FR',{style:'currency',currency:'EUR'}),[amount]);
- async function calc(v:number){const safe=Math.max(100,Math.floor(v/100)*100);setQty(safe);const {data,error}=await supabase.rpc('custom_credit_price',{p_credits:safe});if(!error)setAmount(Number(data))}
- async function createOrder(){setLoading(true);setMsg('');const {data:{user}}=await supabase.auth.getUser();if(!user){location.href='/login';return}
- if(plan==='free'){setMsg('Un abonnement actif est requis avant d’acheter des crédits supplémentaires.');setLoading(false);return}
- const {data,error}=await supabase.rpc('create_credit_order',{p_credits:qty});setLoading(false);if(error)return setMsg(error.message);const row=Array.isArray(data)?data[0]:data;setAmount(Number(row?.amount_eur||0));setMsg('Commande préparée. Paiement PayPal sécurisé à connecter à cette commande.')}
- useEffect(()=>{calc(100)},[]);
- return <main className="page-shell"><Link href="/dashboard">← Retour au dashboard</Link><div className="eyebrow" style={{marginTop:24}}>RECHARGE PERSONNALISÉE</div><h1 style={{fontSize:48}}>Acheter des crédits supplémentaires</h1><p style={{color:'#9299ad',maxWidth:680}}>Après votre abonnement, choisissez librement la quantité de crédits à ajouter à votre compte, par tranches de 100 crédits.</p><div className="pricing-grid" style={{gridTemplateColumns:'1.1fr .9fr'}}>
- <article className="price-card featured"><span className="plan-badge">PERSONNALISÉ</span><h2>Quantité de crédits</h2><div className="price">{qty} crédits</div><input type="range" min="100" max="10000" step="100" value={qty} onChange={e=>calc(Number(e.target.value))}/><input style={{marginTop:14}} type="number" min="100" step="100" value={qty} onChange={e=>calc(Number(e.target.value)||100)}/><p>Minimum 100 crédits. Vous pouvez choisir 200, 300, 500, 1000, 2500, etc.</p></article>
- <article className="price-card"><h2>Résumé</h2><div className="price">{display}</div><p>{qty} crédits seront ajoutés à votre solde après confirmation du paiement.</p><button className="primary" style={{width:'100%',justifyContent:'center'}} onClick={createOrder} disabled={loading}>{loading?'Préparation…':'Continuer vers PayPal'}</button>{msg&&<div className="auth-msg">{msg}</div>}<p style={{fontSize:12}}>Cette recharge est réservée aux comptes abonnés.</p></article>
- </div></main>
+ const [qty,setQty]=useState(100),[user,setUser]=useState<any>(null),[msg,setMsg]=useState('');
+ useEffect(()=>{supabase.auth.getUser().then(({data})=>{if(!data.user){location.href='/login';return}setUser(data.user)})},[]);
+ const customPrice=useMemo(()=>Math.max(100,Math.floor(qty/100)*100)/100*4.99,[qty]);
+ async function prepareCustom(){
+  const credits=Math.max(100,Math.floor(qty/100)*100);setQty(credits);setMsg('Préparation du paiement…');
+  const {data,error}=await supabase.rpc('create_credit_order',{p_credits:credits});
+  if(error){setMsg(error.message);return}
+  const row=Array.isArray(data)?data[0]:data;
+  setMsg(`Commande préparée : ${credits} crédits · ${Number(row?.amount_eur||customPrice).toFixed(2)} €. Paiement PayPal sécurisé à connecter pour crédit automatique.`);
+ }
+ return <main className="page-shell">
+  <div className="page-head"><div><Link href="/dashboard">← Dashboard</Link><div className="eyebrow" style={{marginTop:18}}>CRÉDITS SUPPLÉMENTAIRES</div><h1>Acheter des crédits</h1><p style={{color:'#9299ad'}}>Après vos crédits inclus dans l’abonnement, rechargez votre compte quand vous voulez.</p></div></div>
+  <div className="pricing-grid">
+   {packs.map(p=><article className={'price-card '+(p.credits===500?'featured':'')} key={p.credits}>{p.credits===500&&<span className="plan-badge">POPULAIRE</span>}<h2>{p.credits} crédits</h2><div className="price">{p.price.toFixed(2).replace('.',',')} €</div><p>{p.label}</p><button className="primary" onClick={()=>{setQty(p.credits);prepareCustom()}}>Choisir ce pack</button></article>)}
+  </div>
+  <article className="price-card" style={{marginTop:28,maxWidth:700,marginLeft:'auto',marginRight:'auto'}}>
+   <div className="eyebrow">QUANTITÉ PERSONNALISÉE</div><h2>Choisissez votre quantité</h2><p>Minimum 100 crédits, par tranches de 100. Vous pouvez saisir autant de crédits que vous souhaitez.</p>
+   <div style={{display:'grid',gridTemplateColumns:'1fr auto',gap:12,alignItems:'end'}}>
+    <label style={{textAlign:'left'}}><small style={{display:'block',marginBottom:7,color:'#9299ad'}}>Nombre de crédits</small><input type="number" min="100" step="100" value={qty} onChange={e=>setQty(Math.max(100,Number(e.target.value)||100))}/></label>
+    <div style={{minWidth:150,textAlign:'right'}}><small style={{color:'#9299ad'}}>Total estimé</small><div style={{fontSize:28,fontWeight:800}}>{customPrice.toFixed(2).replace('.',',')} €</div></div>
+   </div>
+   <button className="primary" style={{marginTop:18,width:'100%',justifyContent:'center'}} onClick={prepareCustom}>Continuer avec cette quantité</button>
+   {msg&&<div className="auth-msg">{msg}</div>}
+  </article>
+  <p style={{color:'#9299ad',marginTop:24,textAlign:'center'}}>Tarif personnalisé actuel : 4,99 € par tranche de 100 crédits. Les crédits n’expirent pas avec l’abonnement en cours.</p>
+ </main>
 }
