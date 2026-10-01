@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 240" role="img" aria-labelledby="t d">
+<title id="t">NovaPhoto AI</title><desc id="d">Logo NovaPhoto AI avec N lumineux et objectif photo</desc>
+<defs>
+ <linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#35d9ff"/><stop offset=".35" stop-color="#4b5cff"/><stop offset=".68" stop-color="#d934ff"/><stop offset="1" stop-color="#ff8a3d"/></linearGradient>
+ <radialGradient id="lens"><stop stop-color="#f8d5ff"/><stop offset=".18" stop-color="#c12cff"/><stop offset=".42" stop-color="#186aff"/><stop offset=".72" stop-color="#091238"/><stop offset="1" stop-color="#020511"/></radialGradient>
+ <filter id="glow"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect x="10" y="10" width="860" height="220" rx="52" fill="#090b1a" stroke="url(#g)" stroke-width="7"/>
+<g transform="translate(55 28)" filter="url(#glow)">
+ <path d="M30 150V50c0-18 22-27 35-14l88 88V54c0-13 10-24 24-24h21v120c0 18-22 27-35 14L75 76v74c0 13-10 24-24 24H30z" fill="none" stroke="url(#g)" stroke-width="25" stroke-linecap="round" stroke-linejoin="round"/>
+ <circle cx="219" cy="96" r="47" fill="url(#lens)" stroke="url(#g)" stroke-width="10"/>
+ <circle cx="219" cy="96" r="20" fill="#080d28" stroke="#77d9ff" stroke-width="4"/>
+ <path d="M270 35l7 16 16 7-16 7-7 16-7-16-16-7 16-7z" fill="#ffd36a"/>
+</g>
+<text x="350" y="142" font-family="Arial,Helvetica,sans-serif" font-size="68" font-weight="800" fill="#fff">NovaPhoto</text>
+<text x="713" y="142" font-family="Arial,Helvetica,sans-serif" font-size="68" font-weight="800" fill="url(#g)">AI</text>
+</svg>
