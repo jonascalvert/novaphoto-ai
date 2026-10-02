@@ -87,7 +87,7 @@ export default function Home(){
   onClick={()=>{document.getElementById('studio')?.scrollIntoView({behavior:'smooth',block:'start'});setTimeout(()=>input.current?.click(),450)}}
   aria-label="Découvrir les exemples avant après et essayer NovaPhoto AI"
  >
-  <img src="/novaphoto-tool-examples.jpg" alt="Exemples avant et après des outils NovaPhoto AI"/>
+  <img src="/novaphoto-tool-examples-premium.webp" alt="Exemples avant et après des outils NovaPhoto AI"/>
  </button>
  <p className="actual-tool-showcase-hint">Cliquez sur l’image pour essayer NovaPhoto AI avec votre propre photo.</p>
 </section>
