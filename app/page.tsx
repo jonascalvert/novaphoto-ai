@@ -8,6 +8,14 @@ const beforeAfterDemos=[
  {title:'Photo extérieure',img:'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=1200&q=85',before:'brightness(76%) saturate(68%) contrast(86%)',after:'brightness(105%) saturate(112%) contrast(108%)'},
  {title:'Détails & netteté',img:'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=1200&q=85',before:'brightness(80%) saturate(70%) contrast(90%) blur(1px)',after:'brightness(104%) saturate(110%) contrast(110%)'}
 ];
+const toolDemos=[
+ {name:'Préserver le visage',desc:'Identité et traits naturels',img:'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=1200&q=88',before:'brightness(78%) saturate(72%) contrast(90%) blur(.7px)',after:'brightness(106%) saturate(108%) contrast(106%)',tag:'Visage'},
+ {name:'Upscale 4K',desc:'Plus de détails, haute résolution',img:'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=1200&q=88',before:'brightness(82%) contrast(88%) blur(1.4px)',after:'brightness(104%) contrast(112%) saturate(108%)',tag:'4K'},
+ {name:'Arrière-plan',desc:'Suppression et PNG transparent',img:'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1200&q=88',before:'brightness(96%)',after:'brightness(108%) contrast(105%) saturate(102%)',tag:'PNG'},
+ {name:'T-shirt Ready',desc:'Fichier propre pour impression',img:'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=1200&q=88',before:'brightness(90%) contrast(90%)',after:'brightness(106%) contrast(118%) saturate(105%)',tag:'PRINT'},
+ {name:'Retouche manuelle',desc:'Réglages sans crédits IA',img:'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=1200&q=88',before:'brightness(80%) saturate(76%) contrast(90%)',after:'brightness(108%) saturate(114%) contrast(108%)',tag:'MANUEL'},
+ {name:'Amélioration Pro',desc:'Lumière, netteté et couleurs',img:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=88',before:'brightness(74%) saturate(70%) contrast(86%)',after:'brightness(110%) saturate(125%) contrast(108%)',tag:'PRO'}
+];
 const toolList=[['Amélioration Pro',Sparkles,'Lumière, netteté et couleurs'],['Préserver le visage',ScanFace,'Identité et traits naturels'],['Upscale 4K',Maximize,'Plus de détails, haute résolution'],['Arrière-plan',Eraser,'Suppression et PNG transparent'],['T-shirt Ready',Shirt,'Fichier propre pour impression'],['Retouche manuelle',SlidersHorizontal,'Réglages sans crédits IA']];
 type Item={file:File;src:string;result?:string;status:'ready'|'processing'|'done'|'error';error?:string;selected:boolean;saved?:boolean};
 export default function Home(){
@@ -72,6 +80,19 @@ export default function Home(){
    </article>)}
   </div>
   <button className="primary compare-cta" onClick={()=>{document.getElementById('studio')?.scrollIntoView({behavior:'smooth'});setTimeout(()=>input.current?.click(),500)}}><WandSparkles/> Essayer avec ma photo</button>
+ </section>
+ <section className="tool-demo-section">
+ <div className="section-kicker">EXEMPLES PAR OUTIL</div>
+ <h2>Voyez ce que chaque outil peut <em>transformer.</em></h2>
+ <p className="section-lead">Chaque exemple est cliquable. Choisissez un outil pour aller directement au Studio.</p>
+ <div className="tool-demo-grid">{toolDemos.map((d,i)=><article className="tool-demo-card" key={d.name} onClick={()=>chooseTool(d.name)} role="button" tabIndex={0} onKeyDown={e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();chooseTool(d.name)}}}>
+   <div className="tool-demo-image">
+    <div className="tool-half before-half"><img src={d.img} alt={d.name+' avant'} style={{filter:d.before}}/><span>Avant</span></div>
+    <div className="tool-half after-half"><img src={d.img} alt={d.name+' après'} style={{filter:d.after}}/><span>Après</span></div>
+    <b className="demo-tag">{d.tag}</b>
+   </div>
+   <div className="tool-demo-copy"><div><small>{String(i+1).padStart(2,'0')}</small><h3>{d.name}</h3><p>{d.desc}.</p></div><button type="button" onClick={e=>{e.stopPropagation();chooseTool(d.name)}}>Utiliser cet outil →</button></div>
+  </article>)}</div>
  </section>
  <section id="studio" className="studio"><aside><h3>Outils</h3>{toolList.map(([n,I,d]:any)=><button key={n} className={active===n?'selected':''} onClick={()=>setActive(n)}><I/><span><strong>{n}</strong><small>{d}</small></span></button>)}</aside><div className="work"><div className="worktop"><span><b>{active}</b><small>{manual?' · Sans API · Sans crédits':' · Batch jusqu’à 10 · Face Preserve'}</small></span><span style={{display:'flex',alignItems:'center',gap:10}}><a href="/dashboard"><button type="button">← Mon espace</button></a><span className="credits">{userId?`${credits??'…'} crédits`:'20 crédits offerts'}</span></span></div>
  {!items.length?<div className="drop" onClick={()=>input.current?.click()} onDragOver={e=>e.preventDefault()} onDrop={e=>{e.preventDefault();pick(e.dataTransfer.files)}}><div className="upload"><Upload/></div><h2>Déposez vos photos ici</h2><p>Sélectionnez jusqu’à 10 images</p><button>Choisir des photos</button></div>:<>
