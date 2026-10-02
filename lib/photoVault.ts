@@ -1,5 +1,24 @@
 import {supabase} from './supabase';
 
+
+async function shrinkImage(blob:Blob,maxBytes=8*1024*1024){
+ if(blob.size<=maxBytes)return blob;
+ const bitmap=await createImageBitmap(blob);
+ let scale=Math.min(1,2200/Math.max(bitmap.width,bitmap.height));
+ let quality=.86;
+ for(let i=0;i<6;i++){
+  const canvas=document.createElement('canvas');
+  canvas.width=Math.max(1,Math.round(bitmap.width*scale));
+  canvas.height=Math.max(1,Math.round(bitmap.height*scale));
+  const ctx=canvas.getContext('2d')!;
+  ctx.drawImage(bitmap,0,0,canvas.width,canvas.height);
+  const out=await new Promise<Blob>((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error('Compression impossible')),'image/jpeg',quality));
+  if(out.size<=maxBytes)return out;
+  scale*=.82; quality=Math.max(.68,quality-.06);
+ }
+ throw new Error('Photo originale trop volumineuse. Choisissez une image de moins de 10 Mo.');
+}
+
 export type PrivatePhoto={id:string;tool:string;original_name:string;storage_path:string;original_storage_path?:string|null;created_at:string;expires_at:string;signed_url?:string;original_signed_url?:string};
 
 export async function savePrivatePhoto(dataUrl:string,originalName:string,tool:string,originalDataUrl?:string){
@@ -11,7 +30,7 @@ export async function savePrivatePhoto(dataUrl:string,originalName:string,tool:s
  const up=await supabase.storage.from('private-photos').upload(path,blob,{contentType:blob.type||'image/png',upsert:false});
  if(up.error)throw up.error;
  let originalPath:string|null=null;
- if(originalDataUrl){const ores=await fetch(originalDataUrl);const oblob=await ores.blob();const oext=oblob.type.includes('jpeg')?'jpg':'png';originalPath=`${user.id}/${id}-original.${oext}`;const oup=await supabase.storage.from('private-photos').upload(originalPath,oblob,{contentType:oblob.type||'image/png',upsert:false});if(oup.error){await supabase.storage.from('private-photos').remove([path]);throw oup.error}}
+ if(originalDataUrl){const ores=await fetch(originalDataUrl);let oblob=await ores.blob();oblob=await shrinkImage(oblob);const oext=oblob.type.includes('jpeg')?'jpg':'png';originalPath=`${user.id}/${id}-original.${oext}`;const oup=await supabase.storage.from('private-photos').upload(originalPath,oblob,{contentType:oblob.type||'image/jpeg',upsert:false});if(oup.error){await supabase.storage.from('private-photos').remove([path]);throw oup.error}}
  const expires=new Date(Date.now()+24*60*60*1000).toISOString();
  const ins=await supabase.from('photo_assets').insert({id,user_id:user.id,tool,original_name:originalName,storage_path:path,original_storage_path:originalPath,expires_at:expires}).select().single();
  if(ins.error){await supabase.storage.from('private-photos').remove([path,...(originalPath?[originalPath]:[])]);throw ins.error}
