@@ -120,3 +120,10 @@ body{-webkit-overflow-scrolling:touch}
 .tool-demo-copy button{white-space:nowrap;background:linear-gradient(120deg,#5f3eff,#8b5dff);border:0;font-weight:700}
 @media(max-width:980px){.tool-demo-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:650px){.tool-demo-grid{grid-template-columns:1fr}.tool-demo-copy{align-items:flex-start;flex-direction:column}.tool-demo-copy button{width:100%}}
+
+.actual-tool-showcase{margin-top:10px}
+.actual-tool-showcase-card{display:block;width:100%;padding:0;border:1px solid rgba(119,87,255,.34);border-radius:26px;overflow:hidden;background:#050711;box-shadow:0 28px 90px rgba(0,0,0,.5),0 0 50px rgba(89,58,214,.12);transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease}
+.actual-tool-showcase-card:hover,.actual-tool-showcase-card:focus-visible{transform:translateY(-4px);border-color:#775cff;outline:none;box-shadow:0 34px 100px rgba(0,0,0,.58),0 0 58px rgba(103,70,255,.2)}
+.actual-tool-showcase-card img{display:block;width:100%;height:auto}
+.actual-tool-showcase-hint{margin:14px 0 0;color:#858da3;font-size:13px;text-align:center}
+@media(max-width:650px){.actual-tool-showcase-card{border-radius:16px}.actual-tool-showcase-hint{font-size:12px;padding:0 10px}}
