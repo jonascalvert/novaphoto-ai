@@ -90,3 +90,13 @@ transition:.22s}
 .premium-tool-card:hover .tool-icon,.premium-tool-card:focus-visible .tool-icon{color:#fff;border-color:#7f69ff;box-shadow:0 0 30px rgba(113,82,255,.22)}
 @media(max-width:900px){.tool-grid{grid-template-columns:1fr 1fr}.premium-tool-card{min-height:280px}}
 @media(max-width:600px){.premium-tools:before{inset:-55px -3% -45px;border-radius:26px}.tool-grid{grid-template-columns:1fr}.premium-tool-card{min-height:260px}.premium-tools h2{font-size:36px}}
+
+/* Site scrolling */
+html,body{min-height:100%;overflow-x:hidden;overflow-y:auto}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{-webkit-overflow-scrolling:touch}
+*{scrollbar-width:thin;scrollbar-color:#6750c9 #090b14}
+*::-webkit-scrollbar{width:10px;height:10px}
+*::-webkit-scrollbar-track{background:#090b14}
+*::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#795cff,#43358b);border-radius:999px;border:2px solid #090b14}
+*::-webkit-scrollbar-thumb:hover{background:linear-gradient(180deg,#927cff,#5b49aa)}
