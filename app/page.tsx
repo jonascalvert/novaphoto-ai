@@ -81,19 +81,16 @@ export default function Home(){
   </div>
   <button className="primary compare-cta" onClick={()=>{document.getElementById('studio')?.scrollIntoView({behavior:'smooth'});setTimeout(()=>input.current?.click(),500)}}><WandSparkles/> Essayer avec ma photo</button>
  </section>
- <section className="tool-demo-section">
- <div className="section-kicker">EXEMPLES PAR OUTIL</div>
- <h2>Voyez ce que chaque outil peut <em>transformer.</em></h2>
- <p className="section-lead">Chaque exemple est cliquable. Choisissez un outil pour aller directement au Studio.</p>
- <div className="tool-demo-grid">{toolDemos.map((d,i)=><article className="tool-demo-card" key={d.name} onClick={()=>chooseTool(d.name)} role="button" tabIndex={0} onKeyDown={e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();chooseTool(d.name)}}}>
-   <div className="tool-demo-image">
-    <div className="tool-half before-half"><img src={d.img} alt={d.name+' avant'} style={{filter:d.before}}/><span>Avant</span></div>
-    <div className="tool-half after-half"><img src={d.img} alt={d.name+' après'} style={{filter:d.after}}/><span>Après</span></div>
-    <b className="demo-tag">{d.tag}</b>
-   </div>
-   <div className="tool-demo-copy"><div><small>{String(i+1).padStart(2,'0')}</small><h3>{d.name}</h3><p>{d.desc}.</p></div><button type="button" onClick={e=>{e.stopPropagation();chooseTool(d.name)}}>Utiliser cet outil →</button></div>
-  </article>)}</div>
- </section>
+ <section className="tool-demo-section actual-tool-showcase">
+ <button
+  className="actual-tool-showcase-card"
+  onClick={()=>{document.getElementById('studio')?.scrollIntoView({behavior:'smooth',block:'start'});setTimeout(()=>input.current?.click(),450)}}
+  aria-label="Découvrir les exemples avant après et essayer NovaPhoto AI"
+ >
+  <img src="/novaphoto-tool-examples.jpg" alt="Exemples avant et après des outils NovaPhoto AI"/>
+ </button>
+ <p className="actual-tool-showcase-hint">Cliquez sur l’image pour essayer NovaPhoto AI avec votre propre photo.</p>
+</section>
  <section id="studio" className="studio"><aside><h3>Outils</h3>{toolList.map(([n,I,d]:any)=><button key={n} className={active===n?'selected':''} onClick={()=>setActive(n)}><I/><span><strong>{n}</strong><small>{d}</small></span></button>)}</aside><div className="work"><div className="worktop"><span><b>{active}</b><small>{manual?' · Sans API · Sans crédits':' · Batch jusqu’à 10 · Face Preserve'}</small></span><span style={{display:'flex',alignItems:'center',gap:10}}><a href="/dashboard"><button type="button">← Mon espace</button></a><span className="credits">{userId?`${credits??'…'} crédits`:'20 crédits offerts'}</span></span></div>
  {!items.length?<div className="drop" onClick={()=>input.current?.click()} onDragOver={e=>e.preventDefault()} onDrop={e=>{e.preventDefault();pick(e.dataTransfer.files)}}><div className="upload"><Upload/></div><h2>Déposez vos photos ici</h2><p>Sélectionnez jusqu’à 10 images</p><button>Choisir des photos</button></div>:<>
  {!manual&&<div className="pro-style-panel"><div><div className="eyebrow">STYLE PHOTOGRAPHE</div><h3>Choisissez le rendu professionnel</h3><p>NovaPhoto adapte la lumière, les couleurs, le contraste et les détails selon le style choisi, tout en préservant le visage et l’identité.</p></div><div className="style-pills">{['Portrait photographe','Studio premium','Mariage naturel','Extérieur lumineux','Mode éditoriale','Produit commercial','Noir & blanc pro'].map(s=><button key={s} className={photoStyle===s?'primary':''} onClick={()=>setPhotoStyle(s)}>{s}</button>)}</div></div>}
