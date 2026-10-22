@@ -1,8 +1,10 @@
 'use client';
 import Link from 'next/link';import {useEffect,useState} from 'react';import {supabase} from '../../lib/supabase';import {listMyPrivatePhotos,cleanupMyExpiredPhotos,deleteMyPrivatePhoto} from '../../lib/photoVault';
+const OWNER_EMAIL='jonascalvert@gmail.com';
 export default function Dashboard(){const[email,setEmail]=useState(''),[credits,setCredits]=useState<number|null>(null),[plan,setPlan]=useState('free'),[subscription,setSubscription]=useState('inactive'),[jobs,setJobs]=useState<any[]>([]),[photos,setPhotos]=useState<any[]>([]),[loading,setLoading]=useState(true),[preview,setPreview]=useState<any|null>(null),[previewMode,setPreviewMode]=useState<'before'|'after'>('after');
 useEffect(()=>{(async()=>{const {data:{user}}=await supabase.auth.getUser();if(!user){location.href='/login';return}setEmail(user.email||'');await cleanupMyExpiredPhotos();let {data:p}=await supabase.from('profiles').select('credits,plan,subscription_status').eq('id',user.id).maybeSingle();if(!p){await supabase.from('profiles').upsert({id:user.id,email:user.email,credits:20});p={credits:20,plan:'free',subscription_status:'inactive'}}setCredits(p?.credits??20);setPlan((p as any)?.plan||'free');setSubscription((p as any)?.subscription_status||'inactive');const {data:j}=await supabase.from('photo_jobs').select('id,tool,status,credits_used,created_at').eq('user_id',user.id).order('created_at',{ascending:false}).limit(10);setJobs(j||[]);try{setPhotos(await listMyPrivatePhotos())}catch{setPhotos([])}setLoading(false)})()},[]);
-const canDownload=subscription==='active'||(credits!==null&&credits>0);
+const isOwner=email.trim().toLowerCase()===OWNER_EMAIL;
+const canDownload=isOwner||subscription==='active'||(credits!==null&&credits>0);
 async function removePhoto(p:any){
  if(!confirm('Supprimer définitivement cette photo ?'))return;
  try{
